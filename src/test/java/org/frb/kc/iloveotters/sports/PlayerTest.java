@@ -37,14 +37,11 @@ public class PlayerTest {
     @Test
     public void testAnotherWayToCreateAList() {
         List<Player> players = new ArrayList<>();
-
         players.add(
             new Player("Clay", "Thompson", false, Position.SHOOTING_GUARD,
                 new JerseyNumber("11")));
         players.add(new Player("Sue", "Bird", false, Position.POINT_GUARD,
             new JerseyNumber("10")));
-
         System.out.println(players.size());
-
     }
 }

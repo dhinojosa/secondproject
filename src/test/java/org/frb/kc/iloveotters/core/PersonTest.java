@@ -18,7 +18,4 @@ public class PersonTest {
             person.getLastName());
         System.out.println(format);
     }
-
-    //BankAccount
-
 }

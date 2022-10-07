@@ -43,8 +43,8 @@ public class TeamTest {
     public void testTeamEquality() {
         Team team1 = new Team("Brooklyn Nets");
         Team team2 = new Team("Brooklyn Nets");
-        assertFalse(team1 == team2);      //false
-        assertTrue(team1.equals(team2));  //false
+        assertNotSame(team1, team2);      //false
+        assertEquals(team1, team2);  //false
         assertEquals(team1.getName(), team2.getName());
     }
 
