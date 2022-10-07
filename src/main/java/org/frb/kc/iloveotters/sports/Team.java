@@ -13,7 +13,6 @@ public class Team {
     //roster = collection of players
 
     //member variables, also called attributes
-    //TODO: lock the member variables
 
     private String name;
     //int size; ?

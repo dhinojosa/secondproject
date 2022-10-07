@@ -47,4 +47,11 @@ public class TeamTest {
         assertTrue(team1.equals(team2));  //false
         assertEquals(team1.getName(), team2.getName());
     }
+
+
+    @Test
+    public void testCreatingADreamTeam() {
+       // Team dreamTeam = new Team("Seattle", "Supersonics",
+       //     new Person(""), new Person(""), list of favorite players)
+    }
 }
