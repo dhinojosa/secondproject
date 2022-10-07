@@ -58,20 +58,4 @@ public class Team {
     //main method
     //can we do a test?
 
-   class BankAccount {
-       private float balance;
-
-       public void deposit(float amt);
-       public float withdrawl(float amt);
-   }
-
-
-   class SomethingElse {
-       BankAccount bankAccount;
-
-       method1() {
-           bankAccount.balance += 100100;
-       }
-
-   }
 }
