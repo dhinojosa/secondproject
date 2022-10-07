@@ -1,4 +1,4 @@
-package org.frb.kc.iloveotters;
+package org.frb.kc.iloveotters.core;
 
 import org.junit.Test;
 
@@ -27,5 +27,7 @@ public class FloatingPointArithmeticTest {
     @Test
     public void testAnotherWayToDealWithMoney() {
         long pennies = 10000L;
+        long dollars = 10000L / 100;
+        System.out.println(dollars);
     }
 }

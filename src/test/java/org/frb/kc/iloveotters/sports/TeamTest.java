@@ -1,5 +1,6 @@
-package org.frb.kc.iloveotters;
+package org.frb.kc.iloveotters.sports;
 
+import org.frb.kc.iloveotters.sports.Team;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

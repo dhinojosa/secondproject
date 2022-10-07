@@ -1,4 +1,4 @@
-package org.frb.kc.iloveotters;
+package org.frb.kc.iloveotters.core;
 
 import org.junit.Test;
 

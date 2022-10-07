@@ -1,5 +1,6 @@
-package org.frb.kc.iloveotters;
+package org.frb.kc.iloveotters.core;
 
+import org.frb.kc.iloveotters.core.Person;
 import org.junit.Test;
 
 public class PersonTest {

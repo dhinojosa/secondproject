@@ -1,4 +1,4 @@
-package org.frb.kc.iloveotters;
+package org.frb.kc.iloveotters.core;
 
 public class Person extends Object {
     private String firstName;

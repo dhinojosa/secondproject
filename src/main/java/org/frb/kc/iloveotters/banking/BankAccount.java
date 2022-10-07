@@ -1,4 +1,4 @@
-package org.frb.kc.iloveotters;
+package org.frb.kc.iloveotters.banking;
 
 class BankAccount {
     private int balance;

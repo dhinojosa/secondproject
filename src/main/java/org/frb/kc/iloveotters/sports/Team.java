@@ -1,16 +1,16 @@
-package org.frb.kc.iloveotters;
+package org.frb.kc.iloveotters.sports;
 
 import java.util.Objects;
 
+//Basketball
 public class Team {
     //coach == oooh
     //owner == oooh
-    //sport == oooh
+
     //shouldn't wins and losses be in a season
     //collection seasons
     //roster = collection of players
-    //defense == collection of players
-    //offense == collection of players
+
 
     //perhaps a for loop or while to filter
     // players by offense or defense.
@@ -22,6 +22,7 @@ public class Team {
     String name;
     int size;
     int wins;
+    Player favoritePlayerOfTheMonth;
 
     public Team(String name) {
         if ("".equals(name)) {
