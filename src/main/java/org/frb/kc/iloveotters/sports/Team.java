@@ -7,22 +7,16 @@ public class Team {
     //coach == oooh
     //owner == oooh
 
-    //shouldn't wins and losses be in a season
-    //collection seasons
+    //shouldn't wins and losses be in a season (Is this the right place)
+    //perhaps consider a season?
+
     //roster = collection of players
-
-
-    //perhaps a for loop or while to filter
-    // players by offense or defense.
-
 
     //member variables, also called attributes
     //TODO: lock the member variables
-    int losses;
-    String name;
-    int size;
-    int wins;
-    Player favoritePlayerOfTheMonth;
+
+    private String name;
+    //int size; ?
 
     public Team(String name) {
         if ("".equals(name)) {
@@ -34,7 +28,7 @@ public class Team {
         this.name = name;
     }
 
-    //we will add a player
+    // we will add a player
     // player will have a position
     // based on the position are they offense or defense?
 
@@ -55,8 +49,6 @@ public class Team {
         return Objects.hash(name);
     }
 
-//assign loss name wins
-    //main method
-    //can we do a test?
 
+    //TODO: toString
 }

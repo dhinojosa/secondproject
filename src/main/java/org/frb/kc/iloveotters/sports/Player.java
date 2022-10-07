@@ -15,4 +15,16 @@ public class Player extends Person {
         this.position = position;
         this.number = number;
     }
+
+    public boolean isInjured() {
+        return isInjured;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public JerseyNumber getNumber() {
+        return number;
+    }
 }
