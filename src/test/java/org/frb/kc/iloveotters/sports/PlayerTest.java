@@ -2,6 +2,8 @@ package org.frb.kc.iloveotters.sports;
 
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +46,31 @@ public class PlayerTest {
                 Position.POINT_GUARD, number);
 
         assertEquals(stephenCurry, stephenCurry2);
+    }
+
+    @Test
+    public void testCountRunningTotalOfPlayerInstances() {
+        Player sc = new Player("Stephen", "Curry", false,
+            Position.POINT_GUARD, new JerseyNumber("30"));
+        Player lj = new Player("LeBron", "James", false,
+            Position.POWER_FORWARD, new JerseyNumber("6"));
+        Player sb = new Player("Sue", "Bird", false, Position.POINT_GUARD,
+            new JerseyNumber("10"));
+        assertEquals(3, Player.count());
+    }
+
+    @Test
+    public void testBetterWayPossiblyToCreatePlayer() {
+        Player kawhiLeonard = Player.of("Kawhi", "Leonard",
+            Position.SHOOTING_GUARD, "2");
+        assertFalse(kawhiLeonard.isInjured());
+        assertEquals("2", kawhiLeonard.getNumber().getValue());
+    }
+
+    @Test
+    public void testStaticsAreEverywhere() {
+        LocalDate localDate = LocalDate.of(2022, 10, 14);
+        assertEquals(2022, localDate.getYear());
     }
 
     @Test

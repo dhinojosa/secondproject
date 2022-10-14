@@ -9,6 +9,7 @@ public class Player extends Person {
     private boolean isInjured;
     private Position position;
     private JerseyNumber number;
+    private static int count;
 
     public Player(String firstName, String lastName, boolean isInjured,
                   Position position, JerseyNumber number) {
@@ -16,6 +17,20 @@ public class Player extends Person {
         this.isInjured = isInjured;
         this.position = position;
         this.number = number;
+        //count = count + 1;
+        Player.count++;
+        //count++;
+    }
+
+    public static Player of(String firstName, String lastName, Position position, String jerseyNumber) {
+        return new Player(firstName, lastName, false, position, new JerseyNumber(jerseyNumber));
+    }
+
+    public void flipInjury() {
+        this.isInjured = !this.isInjured;
+    }
+    public static int count() {
+        return Player.count;
     }
 
     public boolean isInjured() {
@@ -43,4 +58,5 @@ public class Player extends Person {
     public int hashCode() {
         return Objects.hash(isInjured, position, number);
     }
+
 }
