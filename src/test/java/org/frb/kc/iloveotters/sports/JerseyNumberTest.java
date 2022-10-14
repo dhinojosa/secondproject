@@ -30,4 +30,22 @@ public class JerseyNumberTest {
         JerseyNumber jerseyNumber = new JerseyNumber("00");
         assertNotNull(jerseyNumber);
     }
+
+    @Test
+    public void testJerseyNumberOf30IsEqualToAnotherJerseyOf30() {
+        JerseyNumber jerseyNumber1 = new JerseyNumber("30");
+        JerseyNumber jerseyNumber2 = new JerseyNumber("30");
+        jerseyNumber1.equals(jerseyNumber2);
+        assertEquals(jerseyNumber1, jerseyNumber2);
+    }
+
+    @Test
+    public void testThatJerseyDoesntAcceptANull() {
+        try {
+            new JerseyNumber(null);
+            fail("This line should never be invoked");
+        } catch (NullPointerException e) {
+            assertEquals("Jersey number cannot be null", e.getMessage());
+        }
+    }
 }

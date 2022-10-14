@@ -22,6 +22,31 @@ public class PlayerTest {
 
 
     @Test
+    public void testStephenCurryReallyStephenCurry() {
+        Player stephenCurry =
+            new Player("Stephen", "Curry", false,
+                Position.POINT_GUARD, new JerseyNumber("30"));
+        Player stephenCurry2 =
+            new Player("Stephen", "Curry", true,
+                Position.POINT_GUARD, new JerseyNumber("30"));
+
+        assertNotEquals(stephenCurry, stephenCurry2);
+    }
+
+    @Test
+    public void testTwoDifferentPointGuardsWithNearlySameAttributes() {
+        JerseyNumber number = new JerseyNumber("30");
+        Player stephenCurry =
+            new Player("Stephen", "Curry", false,
+                Position.POINT_GUARD, number);
+        Player stephenCurry2 =
+            new Player("Luka", "Doncic", false,
+                Position.POINT_GUARD, number);
+
+        assertEquals(stephenCurry, stephenCurry2);
+    }
+
+    @Test
     public void testList() {
         List<Player> players = Arrays.asList(
             new Player("Stephen", "Curry", false,
