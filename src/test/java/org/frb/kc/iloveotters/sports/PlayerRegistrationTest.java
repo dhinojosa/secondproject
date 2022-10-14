@@ -2,6 +2,7 @@ package org.frb.kc.iloveotters.sports;
 
 import org.frb.kc.iloveotters.dao.MySQLPlayerDAO;
 import org.frb.kc.iloveotters.dao.OraclePlayerDAO;
+import org.frb.kc.iloveotters.dao.OracleUpgradePlayerDAO;
 import org.frb.kc.iloveotters.dao.PlayerDAO;
 import org.junit.Test;
 
@@ -72,6 +73,13 @@ public class PlayerRegistrationTest {
     @Test
     public void testPlayerRegisterWithOracleDatabase() {
         PlayerRegistration playerRegistration = new PlayerRegistration(new OraclePlayerDAO());
+        playerRegistration.registerNewPlayer(Player.of("Carla", "Fancyfeet",
+            Position.SMALL_FORWARD, "12"));
+    }
+
+    @Test
+    public void testPlayerRegisterWithOracleUpgradeDatabase() {
+        PlayerRegistration playerRegistration = new PlayerRegistration(new OracleUpgradePlayerDAO());
         playerRegistration.registerNewPlayer(Player.of("Carla", "Fancyfeet",
             Position.SMALL_FORWARD, "12"));
     }
