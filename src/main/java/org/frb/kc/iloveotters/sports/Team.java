@@ -1,21 +1,20 @@
 package org.frb.kc.iloveotters.sports;
 
+import org.frb.kc.iloveotters.core.Person;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 //Basketball
 public class Team {
-    //coach == oooh
-    //owner == oooh
-
-    //shouldn't wins and losses be in a season (Is this the right place)
-    //perhaps consider a season?
-
-    //roster = collection of players
-
     //member variables, also called attributes
-
+    private String mascot;
     private String name;
-    //int size; ?
+    private Person coach;
+    private Person owner;
+    private List<Player> players;
 
     public Team(String name) {
         if ("".equals(name)) {
@@ -23,13 +22,55 @@ public class Team {
         } else if (name == null) {
             throw new NullPointerException("Name cannot be null");
         }
-
         this.name = name;
+        this.players = new ArrayList<>();
     }
 
-    // we will add a player
-    // player will have a position
-    // based on the position are they offense or defense?
+    public Team(String name, List<Player> roster) {
+        this(name);
+        if (roster == null) {
+            throw new NullPointerException("Roster cannot be null");
+        }
+        this.players = roster; //:(
+    }
+
+    public Team(String name, Person coach, Person owner) {
+        this(name);
+        if (coach == null) {
+            throw new NullPointerException("Name cannot be null");
+        }
+
+        if (owner == null) {
+            throw new NullPointerException("Name cannot be null");
+        }
+
+        this.coach = coach;
+        this.owner = owner;
+        this.players = new ArrayList<>();
+    }
+
+    public Team(String name, Person coach, Person owner, List<Player> roster) {
+        this(name, coach, owner);
+        if (roster == null) {
+            throw new NullPointerException("Roster cannot be null");
+        }
+        this.players = roster;
+    }
+
+    public Team(String name, Person coach, Person owner, String mascot, List<Player> roster) {
+        this(name, coach, owner);
+
+        if (mascot == null) {
+            throw new NullPointerException("Mascot cannot be null");
+        }
+        if (roster == null) {
+            throw new NullPointerException("Roster cannot be null");
+        }
+        this.mascot = mascot;
+        this.players = roster;
+    }
+
+
 
     public String getName() {
         return this.name;
@@ -48,6 +89,23 @@ public class Team {
         return Objects.hash(name);
     }
 
+    public int size() {
+        return this.players.size();
+    }
 
-    //TODO: toString
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Team.class.getSimpleName() + "[", "]")
+            .add("name='" + name + "'")
+            .add("players=" + players)
+            .toString();
+    }
+
+    public Person coach() {
+        return this.coach;
+    }
+
+    public Person owner() {
+        return this.owner;
+    }
 }

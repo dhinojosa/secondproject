@@ -1,7 +1,13 @@
 package org.frb.kc.iloveotters.sports;
 
+import org.frb.kc.iloveotters.core.Person;
 import org.frb.kc.iloveotters.sports.Team;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -48,10 +54,62 @@ public class TeamTest {
         assertEquals(team1.getName(), team2.getName());
     }
 
+    @Test
+    public void testAddPlayerToTheRoster() {
+        Team dreamTeam = new Team("Seattle Supersonics",
+            Collections.singletonList(new Player("Hema", "Penugonda", false,
+            Position.POWER_FORWARD, new JerseyNumber("44"))));
+        int size = dreamTeam.size();
+        assertEquals(1, size);
+    }
 
     @Test
-    public void testCreatingADreamTeam() {
-       // Team dreamTeam = new Team("Seattle", "Supersonics",
-       //     new Person(""), new Person(""), list of favorite players)
+    public void testDifferentWaysToMakeLists() {
+        List<Integer> listOne = new ArrayList<>();
+        listOne.add(3);
+        listOne.add(4);
+
+        List<Integer> listTwo = Arrays.asList(1, 2, 3, 5);
+
+        List<Integer> listThree = Collections.singletonList(10);
+    }
+
+    @Test
+    public void testAddPlayerToTheRosterUsingSecondaryConstructor() {
+        Team dreamTeam = new Team("Seattle Supersonics",
+            new Person("Bindu", "Kandanat"), new Person("Emily", "Lynn"), Arrays.asList(new Player("Hema", "Penugonda", false,
+            Position.POWER_FORWARD, new JerseyNumber("44"))));
+        int size = dreamTeam.size();
+        assertEquals(1, size);
+    }
+
+    @Test
+    public void testToString() {
+        Team dreamTeam = new Team("Seattle Supersonics",
+            Arrays.asList(new Player("Hema", "Penugonda", false,
+            Position.POWER_FORWARD, new JerseyNumber("44")), new Player("Ritesh", "Saraff", false,
+                Position.SMALL_FORWARD, new JerseyNumber("43"))));
+        System.out.println(dreamTeam);
+    }
+
+    @Test
+    public void testAddCoach() {
+        Team dreamTeam = new Team("Seattle Supersonics",
+            new Person("Bindu", "Kandanat"), new Person("Emily", "Lynn"));
+
+        //You can do this old style accessor
+        //Person coach = dreamTeam.getCoach();
+
+        // or this new style accessor
+        Person coach = dreamTeam.coach();
+        assertEquals("Bindu", coach.getFirstName());
+
+        Person owner = dreamTeam.owner();
+        assertEquals("Emily", owner.getFirstName());
+        // but this..
+        // Old style setter to set something
+        // And we are overtime likely going avoid this altogether
+        // Team dreamTeam = new Team("Seattle Supersonics");
+        // dreamTeam.setCoach(new Person("Bindu", "Kandanat"));
     }
 }
