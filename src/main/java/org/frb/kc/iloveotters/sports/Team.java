@@ -17,55 +17,33 @@ public class Team {
     private List<Player> players;
 
     public Team(String name) {
+        this(name, null, null, null, new ArrayList<>());
+    }
+
+    public Team(String name, List<Player> roster) {
+        this(name, null, null, null, roster);
+    }
+
+    public Team(String name, Person coach, Person owner) {
+        this(name, coach, owner, null, new ArrayList<>());
+    }
+
+    public Team(String name, Person coach, Person owner, List<Player> roster) {
+        this(name, coach, owner, null, roster);
+    }
+
+    public Team(String name, Person coach, Person owner, String mascot, List<Player> roster) {
         if ("".equals(name)) {
             throw new IllegalArgumentException("No null names allowed");
         } else if (name == null) {
             throw new NullPointerException("Name cannot be null");
         }
-        this.name = name;
-        this.players = new ArrayList<>();
-    }
-
-    public Team(String name, List<Player> roster) {
-        this(name);
         if (roster == null) {
             throw new NullPointerException("Roster cannot be null");
         }
-        this.players = roster; //:(
-    }
-
-    public Team(String name, Person coach, Person owner) {
-        this(name);
-        if (coach == null) {
-            throw new NullPointerException("Name cannot be null");
-        }
-
-        if (owner == null) {
-            throw new NullPointerException("Name cannot be null");
-        }
-
+        this.name = name;
         this.coach = coach;
         this.owner = owner;
-        this.players = new ArrayList<>();
-    }
-
-    public Team(String name, Person coach, Person owner, List<Player> roster) {
-        this(name, coach, owner);
-        if (roster == null) {
-            throw new NullPointerException("Roster cannot be null");
-        }
-        this.players = roster;
-    }
-
-    public Team(String name, Person coach, Person owner, String mascot, List<Player> roster) {
-        this(name, coach, owner);
-
-        if (mascot == null) {
-            throw new NullPointerException("Mascot cannot be null");
-        }
-        if (roster == null) {
-            throw new NullPointerException("Roster cannot be null");
-        }
         this.mascot = mascot;
         this.players = roster;
     }
