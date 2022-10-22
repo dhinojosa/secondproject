@@ -2,7 +2,7 @@ package org.frb.kc.iloveotters.core;
 
 import java.util.Objects;
 
-public class Person extends Object {
+public class Person extends Object implements Comparable<Person>{
     private String firstName;
     private String lastName;
 
@@ -29,11 +29,16 @@ public class Person extends Object {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return firstName.equals(person.firstName) && lastName.equals(person.lastName);
+        return Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(firstName, lastName);
+    }
+
+    @Override
+    public int compareTo(Person other) {
+        return this.firstName.compareTo(other.firstName);
     }
 }

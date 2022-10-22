@@ -2,19 +2,16 @@ package org.frb.kc.iloveotters.sports;
 
 import org.frb.kc.iloveotters.core.Person;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.StringJoiner;
+import java.util.*;
 
 //Basketball
 public class Team {
     //member variables, also called attributes
-    private String mascot;
-    private String name;
-    private Person coach;
-    private Person owner;
-    private List<Player> players;
+    private final String mascot;
+    private final String name;
+    private final Person coach;
+    private final Person owner;
+    private final List<Player> players;
 
     public Team(String name) {
         this(name, null, null, null, new ArrayList<>());
@@ -79,11 +76,15 @@ public class Team {
             .toString();
     }
 
-    public Person coach() {
-        return this.coach;
+    public Optional<Person> coach() {
+        return Optional.ofNullable(coach);
     }
 
-    public Person owner() {
-        return this.owner;
+    public Optional<Person> owner() {
+        return Optional.ofNullable(owner);
+    }
+
+    public String mascot() {
+        return mascot;
     }
 }

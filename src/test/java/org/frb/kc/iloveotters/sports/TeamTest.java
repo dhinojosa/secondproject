@@ -4,10 +4,7 @@ import org.frb.kc.iloveotters.core.Person;
 import org.frb.kc.iloveotters.sports.Team;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -58,7 +55,7 @@ public class TeamTest {
     public void testAddPlayerToTheRoster() {
         Team dreamTeam = new Team("Seattle Supersonics",
             Collections.singletonList(new Player("Hema", "Penugonda", false,
-            Position.POWER_FORWARD, new JerseyNumber("44"))));
+                Position.POWER_FORWARD, new JerseyNumber("44"))));
         int size = dreamTeam.size();
         assertEquals(1, size);
     }
@@ -87,7 +84,7 @@ public class TeamTest {
     public void testToString() {
         Team dreamTeam = new Team("Seattle Supersonics",
             Arrays.asList(new Player("Hema", "Penugonda", false,
-            Position.POWER_FORWARD, new JerseyNumber("44")), new Player("Ritesh", "Saraff", false,
+                Position.POWER_FORWARD, new JerseyNumber("44")), new Player("Ritesh", "Saraff", false,
                 Position.SMALL_FORWARD, new JerseyNumber("43"))));
         System.out.println(dreamTeam);
     }
@@ -101,15 +98,37 @@ public class TeamTest {
         //Person coach = dreamTeam.getCoach();
 
         // or this new style accessor
-        Person coach = dreamTeam.coach();
-        assertEquals("Bindu", coach.getFirstName());
+        Optional<Person> coach = dreamTeam.coach();
+        assertEquals("Bindu", coach.orElse(new Person("Mirza", "Alam")).getFirstName());
 
-        Person owner = dreamTeam.owner();
-        assertEquals("Emily", owner.getFirstName());
+        Optional<Person> owner = dreamTeam.owner();
+        assertEquals("Emily", owner.orElse(new Person("Melissa", "Wachter")).getFirstName());
         // but this..
         // Old style setter to set something
         // And we are overtime likely going avoid this altogether
         // Team dreamTeam = new Team("Seattle Supersonics");
         // dreamTeam.setCoach(new Person("Bindu", "Kandanat"));
+    }
+
+    @Test
+    public void testRosterFromTeamWithNameCoachAndOwner() {
+        Team dreamTeam = new Team("Seattle Supersonics",
+            new Person("Bindu", "Kandanat"), new Person("Emily", "Lynn"));
+        assertEquals(0, dreamTeam.size());
+    }
+
+    @Test
+    public void testGettingTheCoachFromTeamWithNameCoachAndOwner() {
+        Person coach = new Person("Bindu", "Kandanat");
+        Team dreamTeam = new Team("Seattle Supersonics",
+            coach, new Person("Emily", "Lynn"));
+        assertEquals(coach, dreamTeam.coach().orElse(new Person("Mirza", "Alam")));
+    }
+
+    @Test
+    public void testGettingTheCoachFromTeamWithNameNoCoachAndNoOwner() {
+        Team dreamTeam = new Team("Seattle Supersonics");
+        Person person = dreamTeam.coach().orElse(new Person("Mirza", "Alam"));
+        assertEquals("Mirza", person.getFirstName());
     }
 }
