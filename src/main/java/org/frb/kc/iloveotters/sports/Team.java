@@ -3,6 +3,8 @@ package org.frb.kc.iloveotters.sports;
 import org.frb.kc.iloveotters.core.Person;
 
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 //Basketball
 public class Team {
@@ -29,7 +31,8 @@ public class Team {
         this(name, coach, owner, null, roster);
     }
 
-    public Team(String name, Person coach, Person owner, String mascot, List<Player> roster) {
+    public Team(String name, Person coach, Person owner, String mascot,
+                List<Player> roster) {
         if ("".equals(name)) {
             throw new IllegalArgumentException("No null names allowed");
         } else if (name == null) {
@@ -44,7 +47,6 @@ public class Team {
         this.mascot = mascot;
         this.players = roster;
     }
-
 
 
     public String getName() {
@@ -86,5 +88,36 @@ public class Team {
 
     public String mascot() {
         return mascot;
+    }
+
+    public List<Player> findPlayerByPosition(Position position) {
+        return players
+            .stream()
+            .filter(player -> player.getPosition().equals(position))
+            .sorted()
+            .collect(Collectors.toList());
+    }
+
+
+    public List<Player> findPlayerByPositionClassic(Position position) {
+        List<Player> result = new ArrayList<>();
+        for (Player player : players) {
+            if (player.getPosition().equals(position)) {
+                result.add(player);
+            }
+        }
+        Collections.sort(result); //old way, and mutable
+        return result;
+    }
+    public List<Player> findPlayerByPosition(Position position, Comparator<Player> playerComparator) {
+        List<Player> result = findPlayerByPosition(position);
+        result.sort(playerComparator);
+        return result;
+    }
+
+    public List<Player> findPlayerByPositionClassic(Position position, Comparator<Player> playerComparator) {
+        List<Player> result = findPlayerByPosition(position);
+        result.sort(playerComparator);
+        return result;
     }
 }

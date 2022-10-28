@@ -6,7 +6,11 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Fail.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 public class TeamTest {
 
@@ -86,7 +90,7 @@ public class TeamTest {
             Arrays.asList(new Player("Hema", "Penugonda", false,
                 Position.POWER_FORWARD, new JerseyNumber("44")), new Player("Ritesh", "Saraff", false,
                 Position.SMALL_FORWARD, new JerseyNumber("43"))));
-        System.out.println(dreamTeam);
+        assertThat(dreamTeam.toString()).isEqualTo("Team[name='Seattle Supersonics', players=[Person[Hema, Penugonda], Person[Ritesh, Saraff]]]");
     }
 
     @Test
@@ -130,5 +134,109 @@ public class TeamTest {
         Team dreamTeam = new Team("Seattle Supersonics");
         Person person = dreamTeam.coach().orElse(new Person("Mirza", "Alam"));
         assertEquals("Mirza", person.getFirstName());
+    }
+
+    @Test
+    public void testFilterPlayerByPosition() {
+        Team dreamTeam = new Team("Seattle Supersonics", Arrays.asList(
+            new Player("Emily", "Lynn", false, Position.POINT_GUARD, new JerseyNumber("30")),
+            new Player("Samuel", "Dongeso", false, Position.SHOOTING_GUARD, new JerseyNumber("12")),
+            new Player("Shirley", "Seller", false, Position.SMALL_FORWARD, new JerseyNumber("19")),
+            new Player("Raj", "Sundaresan", false, Position.CENTER, new JerseyNumber("44")),
+            new Player("Melissa", "Wachter", false, Position.POWER_FORWARD, new JerseyNumber("33"))
+        ));
+        List<Player> smallForwardList =
+            dreamTeam.findPlayerByPosition(Position.SMALL_FORWARD);
+        assertThat(smallForwardList).hasSize(1);
+    }
+
+    @Test
+    public void testFilterPlayerByPositionWithTwoSmallForwards() {
+        Team dreamTeam = new Team("Seattle Supersonics", Arrays.asList(
+            new Player("Emily", "Lynn", false, Position.POINT_GUARD, new JerseyNumber("30")),
+            new Player("Samuel", "Dongeso", false, Position.SHOOTING_GUARD, new JerseyNumber("12")),
+            new Player("Shirley", "Seller", false, Position.SMALL_FORWARD, new JerseyNumber("19")),
+            new Player("Raj", "Sundaresan", false, Position.CENTER, new JerseyNumber("44")),
+            new Player("Aaron", "Hall", false, Position.SMALL_FORWARD, new JerseyNumber("22")),
+            new Player("Melissa", "Wachter", false, Position.POWER_FORWARD, new JerseyNumber("33"))
+        ));
+        List<Player> smallForwardList =
+            dreamTeam.findPlayerByPosition(Position.SMALL_FORWARD);
+        assertThat(smallForwardList).hasSize(2);
+    }
+
+
+    @Test
+    public void testFilterPlayerByPositionWithThreeSmallForwardsWithNaturalOrdering() {
+        Player shirley = new Player("Shirley", "Seller", false,
+            Position.SMALL_FORWARD, new JerseyNumber("19"));
+        Player aaron = new Player("Aaron", "Hall", false,
+            Position.SMALL_FORWARD, new JerseyNumber("22"));
+        Player jay = new Player("Jay", "Raja", false,
+            Position.SMALL_FORWARD, new JerseyNumber("11"));
+        Team dreamTeam = new Team("Seattle Supersonics", Arrays.asList(
+            new Player("Emily", "Lynn", false, Position.POINT_GUARD, new JerseyNumber("30")),
+            new Player("Samuel", "Dongeso", false, Position.SHOOTING_GUARD, new JerseyNumber("12")),
+            shirley,
+            new Player("Raj", "Sundaresan", false, Position.CENTER, new JerseyNumber("44")),
+            aaron,
+            new Player("Melissa", "Wachter", false, Position.POWER_FORWARD, new JerseyNumber("33")),
+            jay
+        ));
+        List<Player> smallForwardList =
+            dreamTeam.findPlayerByPosition(Position.SMALL_FORWARD);
+        assertThat(smallForwardList).isEqualTo(Arrays.asList(aaron, jay, shirley));
+    }
+
+    @Test
+    public void testFilterPlayerByPositionWithThreeSmallForwardsWithCustomOrderingByJerseyNumber() {
+        Player shirley = new Player("Shirley", "Seller", false,
+            Position.SMALL_FORWARD, new JerseyNumber("19"));
+        Player aaron = new Player("Aaron", "Hall", false,
+            Position.SMALL_FORWARD, new JerseyNumber("22"));
+        Player jay = new Player("Jay", "Raja", false,
+            Position.SMALL_FORWARD, new JerseyNumber("11"));
+
+        Team dreamTeam = new Team("Seattle Supersonics", Arrays.asList(
+            new Player("Emily", "Lynn", false, Position.POINT_GUARD, new JerseyNumber("30")),
+            new Player("Samuel", "Dongeso", false, Position.SHOOTING_GUARD, new JerseyNumber("12")),
+            shirley,
+            new Player("Raj", "Sundaresan", false, Position.CENTER, new JerseyNumber("44")),
+            aaron,
+            new Player("Melissa", "Wachter", false, Position.POWER_FORWARD, new JerseyNumber("33")),
+            jay
+        ));
+        List<Player> smallForwardList =
+            dreamTeam.findPlayerByPosition(Position.SMALL_FORWARD, Comparator.comparing(player -> player.getNumber().getValue()));
+        assertThat(smallForwardList).isEqualTo(Arrays.asList(jay, shirley, aaron));
+    }
+
+    @Test
+    public void testFilterPlayerByPositionWithOneSmallPointGuard() {
+        Team dreamTeam = new Team("Seattle Supersonics", Arrays.asList(
+            new Player("Emily", "Lynn", false, Position.POINT_GUARD, new JerseyNumber("30")),
+            new Player("Samuel", "Dongeso", false, Position.SHOOTING_GUARD, new JerseyNumber("12")),
+            new Player("Shirley", "Seller", false, Position.SMALL_FORWARD, new JerseyNumber("19")),
+            new Player("Raj", "Sundaresan", false, Position.CENTER, new JerseyNumber("44")),
+            new Player("Aaron", "Hall", false, Position.SMALL_FORWARD, new JerseyNumber("22")),
+            new Player("Melissa", "Wachter", false, Position.POWER_FORWARD, new JerseyNumber("33"))
+        ));
+        List<Player> smallForwardList =
+            dreamTeam.findPlayerByPosition(Position.POINT_GUARD);
+        assertThat(smallForwardList).hasSize(1);
+    }
+
+    @Test
+    public void testFilterPlayerByPositionWithSmallPointGuardButNoneAvailable() {
+        Team dreamTeam = new Team("Seattle Supersonics", Arrays.asList(
+            new Player("Samuel", "Dongeso", false, Position.SHOOTING_GUARD, new JerseyNumber("12")),
+            new Player("Shirley", "Seller", false, Position.SMALL_FORWARD, new JerseyNumber("19")),
+            new Player("Raj", "Sundaresan", false, Position.CENTER, new JerseyNumber("44")),
+            new Player("Aaron", "Hall", false, Position.SMALL_FORWARD, new JerseyNumber("22")),
+            new Player("Melissa", "Wachter", false, Position.POWER_FORWARD, new JerseyNumber("33"))
+        ));
+        List<Player> smallForwardList =
+            dreamTeam.findPlayerByPosition(Position.POINT_GUARD);
+        assertThat(smallForwardList).hasSize(0);
     }
 }
