@@ -3,6 +3,7 @@ package org.frb.kc.iloveotters.sports;
 import org.frb.kc.iloveotters.core.Person;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -109,13 +110,18 @@ public class Team {
         Collections.sort(result); //old way, and mutable
         return result;
     }
-    public List<Player> findPlayerByPosition(Position position, Comparator<Player> playerComparator) {
-        List<Player> result = findPlayerByPosition(position);
-        result.sort(playerComparator);
-        return result;
+
+    public List<Player> findPlayerByPosition(Position position,
+                                             Comparator<Player> playerComparator) {
+        return
+            findPlayerByPosition(position)
+                .stream()
+                .sorted(playerComparator)
+                .collect(Collectors.toList());
     }
 
-    public List<Player> findPlayerByPositionClassic(Position position, Comparator<Player> playerComparator) {
+    public List<Player> findPlayerByPositionClassic(Position position,
+                                                    Comparator<Player> playerComparator) {
         List<Player> result = findPlayerByPosition(position);
         result.sort(playerComparator);
         return result;
